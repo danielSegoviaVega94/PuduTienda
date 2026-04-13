@@ -82,7 +82,7 @@ export const PRODUCTS: Record<string, Product> = {
     basePrice: 5000,
     isSwappable: false,
     inSeason: true,
-    imageUrl: 'https://images.unsplash.com/photo-1587049352847-4d4b12b1413e?auto=format&fit=crop&q=80&w=300',
+    imageUrl: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&q=80&w=300',
     tags: ['artesanal'],
   },
 };

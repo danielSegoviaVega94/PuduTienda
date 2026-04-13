@@ -1,6 +1,6 @@
 import { motion, useScroll, useVelocity, useTransform, useSpring } from 'motion/react';
-import { ShoppingCart, Package, RefreshCw, MessageCircle, Home, Star, Heart } from 'lucide-react';
-import { BOX_TEMPLATES } from '../data';
+import { ShoppingCart, Package, RefreshCw, MessageCircle, Home, Heart } from 'lucide-react';
+import { useAppContext } from '../context/AppContext';
 import { BoxTemplate } from '../types';
 
 interface LandingProps {
@@ -8,6 +8,7 @@ interface LandingProps {
 }
 
 export default function Landing({ onSelectBox }: LandingProps) {
+  const { boxTemplates, settings } = useAppContext();
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
@@ -40,8 +41,8 @@ export default function Landing({ onSelectBox }: LandingProps) {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 relative inline-block"
           >
-            <img 
-              src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800" 
+            <img
+              src={settings.heroImageUrl}
               alt="Caja de verduras frescas" 
               className="w-full h-64 object-cover rounded-3xl shadow-xl"
             />
@@ -122,7 +123,7 @@ export default function Landing({ onSelectBox }: LandingProps) {
             <p className="text-pudu-earth-light mb-6 px-2">Recuerda: son solo una idea. ¡Puedes cambiarles lo que quieras!</p>
             
             <div className="flex overflow-x-auto gap-4 pb-8 -mx-4 px-4 snap-x">
-              {BOX_TEMPLATES.map((box) => (
+              {boxTemplates.map((box) => (
                 <div key={box.id} className="min-w-[280px] sm:min-w-[320px] bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 snap-center flex flex-col">
                   <img src={box.imageUrl} alt={box.name} className="w-full h-48 object-cover" />
                   <div className="p-5 flex flex-col flex-1">
@@ -145,22 +146,6 @@ export default function Landing({ onSelectBox }: LandingProps) {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="py-12 px-4 bg-white">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl font-display font-bold text-pudu-earth mb-8">Amigos con la guatita llena 🥰</h2>
-            
-            <div className="bg-pudu-yellow/50 p-6 rounded-3xl relative border border-pudu-yellow-dark/30">
-              <div className="flex justify-center gap-1 mb-4 text-pudu-green-dark">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
-              </div>
-              <p className="text-lg text-pudu-earth-light italic mb-4">
-                "Me encanta que puedo cambiar los tomates por más paltas porque en casa somos adictos. ¡El Pudú siempre llega con todo fresquito a Coquimbo!"
-              </p>
-              <p className="font-medium text-pudu-earth">— Camila V.</p>
-            </div>
-          </div>
-        </section>
       </main>
 
       {/* Footer */}
@@ -168,11 +153,10 @@ export default function Landing({ onSelectBox }: LandingProps) {
         <div className="max-w-2xl mx-auto">
           <span className="text-5xl mb-4 block">🦌</span>
           <h3 className="font-display font-bold text-2xl mb-2">La Caja del Pudú</h3>
-          <p className="text-pudu-yellow/80 mb-8 max-w-sm mx-auto">Llevando amor, frescura y el trabajo de nuestros agricultores a las familias de la Cuarta Región.</p>
+          <p className="text-pudu-yellow/80 mb-8 max-w-sm mx-auto">{settings.footerTagline}</p>
           
           <div className="flex flex-col gap-4 mb-8">
             <a href="#" className="hover:text-white transition-colors">Preguntas Frecuentes</a>
-            <a href="#" className="hover:text-white transition-colors">Zonas de Despacho</a>
             <a href="#" className="hover:text-white transition-colors">Hablemos</a>
           </div>
           
